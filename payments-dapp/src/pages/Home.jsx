@@ -1,6 +1,6 @@
 import PaymentCard from "../components/PaymentCard";
 import { ConnectButton } from "thirdweb/react";
-import { client } from "../client";
+import { client } from "../App";
 
 const Home = () => {
     return (

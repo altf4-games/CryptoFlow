@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { Card, CardContent, TextField, Typography, Button } from '@mui/material';
+import { prepareContractCall, resolveMethod, toWei } from "thirdweb"
+import { useSendTransaction } from "thirdweb/react";
+import { contract } from "../App";
 
 const PaymentCard = () => {
+    const { mutate: sendTransaction, isLoading, isError } = useSendTransaction();
 
+    const handleClick = async () => {
+        const transaction = await prepareContractCall({ 
+            contract, 
+            method: resolveMethod("pay"), 
+            params: [message, recipient],
+            value: BigInt(toWei(amount, "ether").toString()),
+        });
+        const transactionHash = await sendTransaction(transaction);
+    };
     
-    const handlePayment = () => {
-        console.log('Address:', recipient);
-        console.log('Amount:', amount);
-        console.log('Message:', message);
-    }
-
     const [recipient, setRecipient] = useState('');
     const [amount, setAmount] = useState('');
     const [message, setMessage] = useState('');
@@ -49,7 +56,7 @@ const PaymentCard = () => {
                     fullWidth
                     margin="normal"
                 />
-                <Button variant="contained" color="primary" onClick={handlePayment}>
+                <Button variant="contained" color="primary" onClick={handleClick}>
                     Send Payment
                 </Button>
             </CardContent>
