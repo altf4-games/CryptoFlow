@@ -8,13 +8,31 @@ const PaymentCard = () => {
     const { mutate: sendTransaction, isLoading, isError } = useSendTransaction();
 
     const handleClick = async () => {
-        const transaction = await prepareContractCall({ 
-            contract, 
-            method: resolveMethod("pay"), 
-            params: [message, recipient],
-            value: BigInt(toWei(amount, "ether").toString()),
-        });
-        const transactionHash = await sendTransaction(transaction);
+        try {
+            const transaction = await prepareContractCall({ 
+                contract, 
+                method: resolveMethod("pay"), 
+                params: [message, recipient],
+                value: BigInt(toWei(amount, "ether").toString()),
+            });
+            const transactionHash = await sendTransaction(transaction);
+            
+            const transactionDetails = {
+                recipient,
+                amount,
+                message,
+                transactionHash,
+                date: new Date().toISOString(),
+            };
+
+            const existingTransactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            existingTransactions.push(transactionDetails);
+            localStorage.setItem('transactions', JSON.stringify(existingTransactions));
+            
+            console.log(transaction.blockExplorers.apiUrl);
+        } catch (error) {
+            console.error('Transaction failed', error);
+        }
     };
     
     const [recipient, setRecipient] = useState('');
@@ -26,7 +44,7 @@ const PaymentCard = () => {
     const handleMessageChange = (e) => setMessage(e.target.value);
 
     return (
-        <Card sx={{ maxWidth: 400, margin: 'auto', padding: 2}}>
+        <Card sx={{ maxWidth: 500, margin: 'auto', padding: 2}}>
             <CardContent>
                 <Typography variant="h6" gutterBottom>
                     Payment Details
