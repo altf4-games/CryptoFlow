@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from "./pages/Home";
 import TransactionHistory from "./components/TransactionHistory";
+import PaymentRequestCard from "./components/PaymentRequestCard";
 import { createThirdwebClient, getContract, resolveMethod } from "thirdweb";
 import { defineChain } from "thirdweb/chains";
 import { ThirdwebProvider } from "thirdweb/react";
@@ -23,7 +24,8 @@ export function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/history" element={< TransactionHistory/>} />
+            <Route path="/history" element={< TransactionHistory />} />
+            <Route path="/request" element={< PaymentRequestCard/>} />
           </Routes>
           </Router>
       </ThirdwebProvider>
