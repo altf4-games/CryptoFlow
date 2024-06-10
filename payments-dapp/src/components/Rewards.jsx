@@ -2,11 +2,11 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useActiveAccount } from "thirdweb/react";
 import { Box, Button, Typography, Container } from '@mui/material';
+import ReferralLink from "./ReferralLink";
 
 const Rewards = () => {
     const abi = [
         "function getPoints() public view returns (uint256)",
-        "function claimNFT() public"
     ];
 
     const [points, setPoints] = useState(0);
@@ -71,6 +71,7 @@ const Rewards = () => {
                     Claim NFT
                 </Button>
             </Box>
+            <ReferralLink />
         </Container>
     );
 };
