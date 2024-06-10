@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, TextField, Typography, Button } from '@mui/material';
 import { prepareContractCall, resolveMethod, toWei } from "thirdweb";
 import { useSendTransaction } from "thirdweb/react";
-import { contract } from "../App";
+import { contract, loyalty_contract } from "../App";
 import { useLocation } from 'react-router-dom';
 
 const PaymentCard = () => {
     const { mutate: sendTransaction, isLoading, isError } = useSendTransaction();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
+    const pointsToIncrease = 10;
 
     const [recipient, setRecipient] = useState(searchParams.get('recipient') || '');
     const [amount, setAmount] = useState(searchParams.get('amount') || '');
@@ -37,8 +38,15 @@ const PaymentCard = () => {
             existingTransactions.push(transactionDetails);
             localStorage.setItem('transactions', JSON.stringify(existingTransactions));
 
-            setIsLocked(false); // Unlock fields after transaction
+            setIsLocked(false);
 
+            const tx = await prepareContractCall({ 
+                contract: loyalty_contract, 
+                method: resolveMethod("addPoints"), 
+                params: [pointsToIncrease] 
+            });
+            const txHash = await sendTransaction(tx);
+            
         } catch (error) {
             console.error('Transaction failed', error);
         }

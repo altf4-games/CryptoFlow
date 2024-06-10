@@ -16,7 +16,13 @@ export const client = createThirdwebClient({
 export const contract = getContract({ 
   client, 
   chain: defineChain(84532), 
-  address: "0xa9db450D528e68121E6059666bdEa061Be8B0F92"
+  address: "0x2AE33D05eF86488077d0B3CFc66FEf98De56e565"
+});
+
+export const loyalty_contract = getContract({ 
+    client, 
+    chain: defineChain(84532), 
+    address: "0xa9db450D528e68121E6059666bdEa061Be8B0F92"
 });
 
 export const wallets = [
