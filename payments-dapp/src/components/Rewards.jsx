@@ -1,10 +1,12 @@
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useActiveAccount } from "thirdweb/react";
+import { Box, Button, Typography, Container } from '@mui/material';
 
 const Rewards = () => {
     const abi = [
-        "function getPoints() public view returns (uint256)"
+        "function getPoints() public view returns (uint256)",
+        "function claimNFT() public"
     ];
 
     const [points, setPoints] = useState(0);
@@ -35,11 +37,41 @@ const Rewards = () => {
         }
     }, [account]);
 
+    const claimNFT = async () => {
+        console.log('Claiming NFT...');
+    };
+
     return (
-        <div>
-            <h1>Rewards</h1>
-            {userAddress && <p>You have {points.toString()} points</p>}
-        </div>
+        <Container maxWidth="sm">
+            <Box 
+                sx={{ 
+                    bgcolor: 'background.paper', 
+                    boxShadow: 1, 
+                    borderRadius: 2, 
+                    p: 2, 
+                    minWidth: 300,
+                    textAlign: 'center',
+                    mt: 5
+                }}
+            >
+                <Typography variant="h4" gutterBottom>
+                    Rewards
+                </Typography>
+                {userAddress && (
+                    <Typography variant="body1" gutterBottom>
+                        You have {points.toString()} points
+                    </Typography>
+                )}
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    onClick={claimNFT} 
+                    disabled={!userAddress}
+                >
+                    Claim NFT
+                </Button>
+            </Box>
+        </Container>
     );
 };
 
