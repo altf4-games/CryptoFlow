@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useActiveAccount } from "thirdweb/react";
 import { Box, Button, Typography, Container } from '@mui/material';
 import ReferralLink from "./ReferralLink";
+import NFTDrop from "./NFTDrop";
 
 const Rewards = () => {
     const abi = [
@@ -37,10 +38,6 @@ const Rewards = () => {
         }
     }, [account]);
 
-    const claimNFT = async () => {
-        console.log('Claiming NFT...');
-    };
-
     return (
         <Container maxWidth="sm">
             <Box 
@@ -62,14 +59,8 @@ const Rewards = () => {
                         You have {points.toString()} points
                     </Typography>
                 )}
-                <Button 
-                    variant="contained" 
-                    color="primary" 
-                    onClick={claimNFT} 
-                    disabled={!userAddress}
-                >
-                    Claim NFT
-                </Button>
+
+                <NFTDrop />
             </Box>
             <ReferralLink />
         </Container>

@@ -12,6 +12,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.19",
+    "@thirdweb-dev/react": "^4.6.31",
     "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
     "react": "^18.3",

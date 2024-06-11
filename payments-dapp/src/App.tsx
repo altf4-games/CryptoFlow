@@ -8,6 +8,9 @@ import { createThirdwebClient, getContract } from "thirdweb";
 import { defineChain, baseSepolia } from "thirdweb/chains";
 import { ThirdwebProvider, ConnectButton } from "thirdweb/react";
 import { createWallet, inAppWallet } from "thirdweb/wallets";
+import { ThirdwebSDKProvider as Provider } from '@thirdweb-dev/react';
+import { BaseSepoliaTestnet } from "@thirdweb-dev/chains";
+import { ethers } from "ethers";
 
 export const client = createThirdwebClient({ 
   clientId: "212a258f698fe1ccfa55047b44fb91fe" 
@@ -20,9 +23,15 @@ export const contract = getContract({
 });
 
 export const loyalty_contract = getContract({ 
-    client, 
-    chain: defineChain(84532), 
-    address: "0xa9db450D528e68121E6059666bdEa061Be8B0F92"
+  client, 
+  chain: defineChain(84532), 
+  address: "0xa9db450D528e68121E6059666bdEa061Be8B0F92"
+});
+
+export const nft_contract = getContract({ 
+  client, 
+  chain: defineChain(84532), 
+  address: "0x03195b833425BC7016B45b9190A0b62733C68641"
 });
 
 export const wallets = [
@@ -42,9 +51,19 @@ export const wallets = [
 ];
 
 export function App() {
+  const signer = new ethers.providers.Web3Provider(
+    window.ethereum,
+  ).getSigner();
+
   return (
     <>
       <ThirdwebProvider>
+        <Provider
+          activeChain={BaseSepoliaTestnet}
+          clientId="212a258f698fe1ccfa55047b44fb91fe"
+          signer={signer}
+        >
+
         <ConnectButton
           client={client}
           wallets={wallets}
@@ -64,6 +83,8 @@ export function App() {
             <Route path="/rewards" element={< Rewards/>} />
           </Routes>
           </Router>
+                    
+        </Provider>
       </ThirdwebProvider>
     </>
   )
