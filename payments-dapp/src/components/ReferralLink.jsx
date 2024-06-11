@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useActiveAccount } from 'thirdweb/react';
 import { Button, Container, Typography, TextField, Box } from '@mui/material';
 import QRCode from 'qrcode.react';
@@ -13,7 +13,14 @@ const ReferralLink = () => {
     setReferralCode(referralLink);
   };
 
+  useEffect(() => {
+    if (account) {
+      generateReferralLink();
+    }
+  }, [account]);
+
   return (
+    <div className="p-4 pb-10 min-h-[100vh] container max-w-screen-lg mx-auto">
     <Container>
       <Box 
         sx={{ 
@@ -26,12 +33,6 @@ const ReferralLink = () => {
             mt: 5
         }}
       >
-        <Typography variant="h4" gutterBottom>
-          Generate Referral Link
-        </Typography>
-        <Button variant="contained" color="primary" onClick={generateReferralLink}>
-          Generate Link
-        </Button>
         {referralCode && (
           <Container sx={{ mt: 2 }}>
             <Typography variant="h6" gutterBottom>
@@ -45,13 +46,17 @@ const ReferralLink = () => {
                 readOnly: true,
               }}
             />
-            <Box sx={{ mt: 2, textAlign: 'center' }}>
-              <QRCode value={referralCode} />
+              <Box sx={{ mt: 2, textAlign: 'center' }}>
+              <div className="flex justify-center items-center">
+                <QRCode value={referralCode} size={200} />
+              </div>
+
             </Box>
           </Container>
         )}
       </Box>
-    </Container>
+      </Container>
+    </div>
   );
 };
 

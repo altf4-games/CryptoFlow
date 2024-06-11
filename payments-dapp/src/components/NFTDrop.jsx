@@ -51,12 +51,14 @@ const NFTDrop = ({points}) => {
                         Claim NFT
                     </Button>
                     {nft && (
-                        <Box>
-                            <MediaRenderer 
-                                client={client}
-                                src={nft.metadata.image}
-                            />
-                            <Typography variant="h4">{nft.metadata.name}</Typography>
+                            <Box>
+                            <div className="flex justify-center items-center mt-5">
+                                <MediaRenderer 
+                                    client={client}
+                                    src={nft.metadata.image}
+                                />
+                            </div>
+                            <Typography variant="h4" className='mt-10'>{nft.metadata.name}</Typography>
                         </Box>
                     )}
                 </div>

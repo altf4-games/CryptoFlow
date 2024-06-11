@@ -17,6 +17,7 @@ const PaymentRequestCard = () => {
     };
 
     return (
+        <div className="p-4 pb-10 min-h-[100vh] container max-w-screen-lg mx-auto">
         <Card sx={{ maxWidth: 500, margin: 'auto', padding: 2 }}>
             <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -46,12 +47,15 @@ const PaymentRequestCard = () => {
                     <div style={{ marginTop: 20, textAlign: 'center' }}>
                         <Typography variant="body2" marginBottom={2}>
                             Share this link: <a href={link}>{link}</a>
-                        </Typography>
-                        <QRCode value={link} />
+                            </Typography>
+                            <div className="flex justify-center items-center">
+                                <QRCode value={link} size={300} />
+                            </div>
                     </div>
                 )}
             </CardContent>
-        </Card>
+            </Card>
+        </div>
     );
 };
 

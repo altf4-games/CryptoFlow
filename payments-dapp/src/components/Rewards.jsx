@@ -38,6 +38,7 @@ const Rewards = () => {
     }, [account]);
 
     return (
+        <div className="p-4 pb-10 min-h-[100vh] container max-w-screen-lg mx-auto">
         <Container maxWidth="sm">
             <Box 
                 sx={{ 
@@ -54,17 +55,23 @@ const Rewards = () => {
                     Rewards
                 </Typography>
                 {userAddress && (
-                    <Typography variant="body1" gutterBottom>
-                        You have {points.toString()} points
-                    </Typography>
+                    <>
+                        <Typography variant="body1" gutterBottom>
+                            You have {points.toString()} points
+                        </Typography>
+                        <Typography variant="body1" gutterBottom>
+                            Claim an NFT for 100 points
+                        </Typography>
+                    </>
                 )}
 
                 <NFTDrop points={
                     Number(points)
                 } />
             </Box>
+            </Container>
             <ReferralLink />
-        </Container>
+        </div>
     );
 };
 

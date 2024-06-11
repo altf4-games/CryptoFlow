@@ -10,6 +10,7 @@ const TransactionHistory = () => {
     }, []);
 
     return (
+        <div className="p-4 pb-10 min-h-[100vh] container max-w-screen-lg mx-auto">
         <Card sx={{ maxWidth: 500, margin: 'auto', padding: 1, marginTop: 4 }}>
             <CardContent>
                 <Typography variant="h6" gutterBottom>
@@ -44,8 +45,10 @@ const TransactionHistory = () => {
                     ))}
                 </List>
             </CardContent>
-        </Card>
+            </Card>
+        </div>
     );
+    
 };
 
 export default TransactionHistory;
