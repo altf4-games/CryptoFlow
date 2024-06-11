@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useActiveAccount } from "thirdweb/react";
-import { Box, Button, Typography, Container } from '@mui/material';
+import { Box, Typography, Container } from '@mui/material';
 import ReferralLink from "./ReferralLink";
 import NFTDrop from "./NFTDrop";
 
@@ -24,7 +24,6 @@ const Rewards = () => {
                 if (userAddress) {
                     const pts = await contract.getPoints({ from: userAddress });
                     setPoints(pts);
-                    console.log(`User has ${pts.toString()} points`);
                 }
             } catch (error) {
                 console.error('Error getting points:', error);
