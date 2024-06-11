@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, TextField, Typography, Button } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import QRCode from 'qrcode.react';
 
 const PaymentRequestCard = () => {
     const [recipient, setRecipient] = useState('');
@@ -17,7 +17,7 @@ const PaymentRequestCard = () => {
     };
 
     return (
-        <Card sx={{ maxWidth: 500, margin: 'auto', padding: 2}}>
+        <Card sx={{ maxWidth: 500, margin: 'auto', padding: 2 }}>
             <CardContent>
                 <Typography variant="h6" gutterBottom>
                     Create Payment Request
@@ -43,9 +43,12 @@ const PaymentRequestCard = () => {
                     Generate Link
                 </Button>
                 {link && (
-                    <Typography variant="body2" marginTop={2}>
-                        Share this link: <a href={link}>{link}</a>
-                    </Typography>
+                    <div style={{ marginTop: 20, textAlign: 'center' }}>
+                        <Typography variant="body2" marginBottom={2}>
+                            Share this link: <a href={link}>{link}</a>
+                        </Typography>
+                        <QRCode value={link} />
+                    </div>
                 )}
             </CardContent>
         </Card>

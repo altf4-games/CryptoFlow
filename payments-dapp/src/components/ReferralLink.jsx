@@ -1,7 +1,7 @@
-// src/components/ReferralLink.js
 import React, { useState } from 'react';
 import { useActiveAccount } from 'thirdweb/react';
 import { Button, Container, Typography, TextField, Box } from '@mui/material';
+import QRCode from 'qrcode.react';
 
 const ReferralLink = () => {
   const [referralCode, setReferralCode] = useState('');
@@ -33,7 +33,7 @@ const ReferralLink = () => {
           Generate Link
         </Button>
         {referralCode && (
-          <Container>
+          <Container sx={{ mt: 2 }}>
             <Typography variant="h6" gutterBottom>
               Your Referral Link:
             </Typography>
@@ -45,9 +45,12 @@ const ReferralLink = () => {
                 readOnly: true,
               }}
             />
+            <Box sx={{ mt: 2, textAlign: 'center' }}>
+              <QRCode value={referralCode} />
+            </Box>
           </Container>
-          )}
-        </Box>
+        )}
+      </Box>
     </Container>
   );
 };

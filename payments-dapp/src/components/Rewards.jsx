@@ -59,7 +59,9 @@ const Rewards = () => {
                     </Typography>
                 )}
 
-                <NFTDrop />
+                <NFTDrop points={
+                    Number(points)
+                } />
             </Box>
             <ReferralLink />
         </Container>
