@@ -19,7 +19,7 @@ const TransactionHistory = () => {
                 <List>
                     {transactions.map((transaction, index) => (
                         <ListItem key={index} divider>
-                            <ListItemText
+                            <ListItemText className='truncate'
                                 primary={`To: ${transaction.recipient}`}
                                 secondary={
                                     <>

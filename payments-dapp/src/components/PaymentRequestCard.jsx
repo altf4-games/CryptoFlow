@@ -11,9 +11,11 @@ const PaymentRequestCard = () => {
     const handleAmountChange = (e) => setAmount(e.target.value);
 
     const generateLink = () => {
-        const baseUrl = window.location.origin;
-        const paymentLink = `${baseUrl}?recipient=${encodeURIComponent(recipient)}&amount=${encodeURIComponent(amount)}`;
-        setLink(paymentLink);
+        if (recipient && amount) {
+            const baseUrl = window.location.origin;
+            const paymentLink = `${baseUrl}?recipient=${encodeURIComponent(recipient)}&amount=${encodeURIComponent(amount)}`;
+            setLink(paymentLink);
+        }
     };
 
     return (
@@ -45,12 +47,17 @@ const PaymentRequestCard = () => {
                 </Button>
                 {link && (
                     <div style={{ marginTop: 20, textAlign: 'center' }}>
-                        <Typography variant="body2" marginBottom={2}>
-                            Share this link: <a href={link}>{link}</a>
-                            </Typography>
-                            <div className="flex justify-center items-center">
-                                <QRCode value={link} size={300} />
-                            </div>
+                        <TextField
+                            fullWidth
+                            variant="outlined"
+                            value={link}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                        <div className="flex justify-center items-center">
+                            <QRCode value={link} size={300} />
+                        </div>
                     </div>
                 )}
             </CardContent>

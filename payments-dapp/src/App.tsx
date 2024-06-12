@@ -92,7 +92,7 @@ function Navbar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Payments Dapp
+            CryptoFlow
           </Typography>
           <div>
             <IconButton
