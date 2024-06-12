@@ -6,11 +6,10 @@ import PaymentRequestCard from "./components/PaymentRequestCard";
 import Rewards from './components/Rewards';
 import { createThirdwebClient, getContract } from "thirdweb";
 import { defineChain, baseSepolia } from "thirdweb/chains";
-import { ThirdwebProvider, ConnectButton } from "thirdweb/react";
+import { ConnectButton } from "thirdweb/react";
 import { createWallet, inAppWallet } from "thirdweb/wallets";
-import { ThirdwebSDKProvider as Provider } from '@thirdweb-dev/react';
+import { ThirdwebSDKProvider } from '@thirdweb-dev/react';
 import { BaseSepoliaTestnet } from "@thirdweb-dev/chains";
-import { ethers } from "ethers";
 import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Container } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -142,15 +141,12 @@ function Navbar() {
 }
 
 export function App() {
-  const signer = new ethers.providers.Web3Provider(window.ethereum,).getSigner();
 
   return (
     <ThemeProvider theme={theme}>
-      <ThirdwebProvider>
-        <Provider
+        <ThirdwebSDKProvider
           activeChain={BaseSepoliaTestnet}
           clientId="212a258f698fe1ccfa55047b44fb91fe"
-          signer={signer}
         >
           <Router>
             <Navbar />
@@ -164,8 +160,7 @@ export function App() {
               <Footer />
             </div>
           </Router>
-        </Provider>
-      </ThirdwebProvider>
+        </ThirdwebSDKProvider>
     </ThemeProvider>
   )
 }

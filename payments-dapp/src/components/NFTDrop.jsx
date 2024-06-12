@@ -3,7 +3,8 @@ import { Box, Button, Typography } from '@mui/material';
 import { useContract, useNFT } from "@thirdweb-dev/react";
 import { useActiveAccount, useSendTransaction, MediaRenderer } from "thirdweb/react";
 import { prepareContractCall, resolveMethod } from "thirdweb";
-import { loyalty_contract, client } from "../App"
+import { loyalty_contract, nft_contract, client } from "../App"
+import { claimTo } from "thirdweb/extensions/erc1155";
 
 const tokenID = Math.floor(Math.random() * 10);
 const claimPrice = 100;
@@ -26,8 +27,13 @@ const NFTDrop = ({points}) => {
                 });
                 const txHash = await sendTransaction(transaction);
 
-                const tx = await contract.erc1155.claimTo(userAddress, tokenID, 1);
-                console.log("Transaction: ", tx.receipt.transactionHash);
+                const tx = await claimTo({
+                    contract: nft_contract,
+                    to: userAddress,
+                    tokenId: BigInt(tokenID),
+                    quantity: 1n,
+                });
+                const tHash = await sendTransaction(tx);
 
             } catch (error) {
                 console.error("Error claiming NFT: ", error);
