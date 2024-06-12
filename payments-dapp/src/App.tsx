@@ -10,10 +10,14 @@ import { ConnectButton } from "thirdweb/react";
 import { createWallet, inAppWallet } from "thirdweb/wallets";
 import { ThirdwebSDKProvider } from '@thirdweb-dev/react';
 import { BaseSepoliaTestnet } from "@thirdweb-dev/chains";
-import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Container } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Container, BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Footer from './components/Footer';
+import HomeIcon from '@mui/icons-material/Home';
+import HistoryIcon from '@mui/icons-material/History';
+import RequestPageIcon from '@mui/icons-material/RequestPage';
+import RedeemIcon from '@mui/icons-material/Redeem';
 
 export const client = createThirdwebClient({ 
   clientId: "212a258f698fe1ccfa55047b44fb91fe" 
@@ -132,7 +136,7 @@ function Navbar() {
               gasless: true,
             }}
             theme={"dark"}
-            connectModal={{ size: "wide" }}
+            connectModal={{ size: "compact" }}
           />
         </Toolbar>
       </Container>
@@ -140,27 +144,48 @@ function Navbar() {
   );
 }
 
-export function App() {
+function FloatingDock() {
+  const [value, setValue] = React.useState(0);
 
   return (
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+      <BottomNavigation
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        showLabels
+      >
+        <BottomNavigationAction component={Link} to="/" label="Pay" icon={<HomeIcon />} />
+        <BottomNavigationAction component={Link} to="/request" label="Request" icon={<RequestPageIcon />} />
+        <BottomNavigationAction component={Link} to="/history" label="History" icon={<HistoryIcon />} />
+        <BottomNavigationAction component={Link} to="/rewards" label="Rewards" icon={<RedeemIcon />} />
+      </BottomNavigation>
+    </Paper>
+  );
+}
+
+export function App() {
+  return (
     <ThemeProvider theme={theme}>
-        <ThirdwebSDKProvider
-          activeChain={BaseSepoliaTestnet}
-          clientId="212a258f698fe1ccfa55047b44fb91fe"
-        >
-          <Router>
-            <Navbar />
-            <div className="min-h-screen bg-black text-white">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/history" element={< TransactionHistory />} />
-                <Route path="/request" element={< PaymentRequestCard />} />
-                <Route path="/rewards" element={< Rewards />} />
-              </Routes>
-              <Footer />
-            </div>
-          </Router>
-        </ThirdwebSDKProvider>
+      <ThirdwebSDKProvider
+        activeChain={BaseSepoliaTestnet}
+        clientId="212a258f698fe1ccfa55047b44fb91fe"
+      >
+        <Router>
+          <Navbar />
+          <div className="min-h-screen bg-black text-white">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/history" element={<TransactionHistory />} />
+              <Route path="/request" element={<PaymentRequestCard />} />
+              <Route path="/rewards" element={<Rewards />} />
+            </Routes>
+            <Footer />
+          </div>
+          <FloatingDock />
+        </Router>
+      </ThirdwebSDKProvider>
     </ThemeProvider>
   )
 }
