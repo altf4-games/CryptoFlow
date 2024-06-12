@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Typography } from '@mui/material'; 
-import { useContract, useNFT } from "@thirdweb-dev/react";
 import { useActiveAccount, useSendTransaction, MediaRenderer } from "thirdweb/react";
 import { prepareContractCall, resolveMethod } from "thirdweb";
 import { loyalty_contract, nft_contract, client } from "../App"
 import { claimTo } from "thirdweb/extensions/erc1155";
+import { getNFT } from "thirdweb/extensions/erc1155";
 
 const tokenID = Math.floor(Math.random() * 10);
 const claimPrice = 100;
@@ -12,8 +12,26 @@ const claimPrice = 100;
 const NFTDrop = ({points}) => {
     const { mutate: sendTransaction, isLoading, isError } = useSendTransaction();
 
-    const { contract } = useContract("0x03195b833425BC7016B45b9190A0b62733C68641");;
-    const { data: nft, isLoading: nftIsLoading } = useNFT(contract, tokenID);
+    const [nft, setNft] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const nftData = await getNFT({
+                    contract: nft_contract,
+                    tokenId: BigInt(tokenID),
+                });
+                setNft(nftData);
+            } catch (error) {
+                console.error("Error fetching NFT data:", error);
+                // Handle error as needed
+            }
+        };
+
+        fetchData();
+        
+    }, []);
+
     const account = useActiveAccount();
     const userAddress = account ? account.address : "";
 
@@ -45,7 +63,7 @@ const NFTDrop = ({points}) => {
 
     return (
         <>
-            {nftIsLoading ? (
+            {nft === null ? (
                 <p>Loading...</p>
             ) : (
                 <div>
@@ -56,7 +74,7 @@ const NFTDrop = ({points}) => {
                     >
                         Claim NFT
                     </Button>
-                    {nft && (
+                    {nft !== null && (
                             <Box>
                             <div className="flex justify-center items-center mt-5">
                                 <MediaRenderer 

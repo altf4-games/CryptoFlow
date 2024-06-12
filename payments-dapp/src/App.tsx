@@ -8,8 +8,7 @@ import { createThirdwebClient, getContract } from "thirdweb";
 import { defineChain, baseSepolia } from "thirdweb/chains";
 import { ConnectButton } from "thirdweb/react";
 import { createWallet, inAppWallet } from "thirdweb/wallets";
-import { ThirdwebSDKProvider } from '@thirdweb-dev/react';
-import { BaseSepoliaTestnet } from "@thirdweb-dev/chains";
+import { ThirdwebProvider } from 'thirdweb/react';
 import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Container, BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -168,10 +167,7 @@ function FloatingDock() {
 export function App() {
   return (
     <ThemeProvider theme={theme}>
-      <ThirdwebSDKProvider
-        activeChain={BaseSepoliaTestnet}
-        clientId="212a258f698fe1ccfa55047b44fb91fe"
-      >
+      <ThirdwebProvider>
         <Router>
           <Navbar />
           <div className="min-h-screen bg-black text-white">
@@ -185,7 +181,7 @@ export function App() {
           </div>
           <FloatingDock />
         </Router>
-      </ThirdwebSDKProvider>
+      </ThirdwebProvider>
     </ThemeProvider>
   )
 }

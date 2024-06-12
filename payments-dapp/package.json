@@ -13,7 +13,6 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.19",
     "@mui/material": "^5.15.19",
-    "@thirdweb-dev/react": "^4.6.31",
     "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
     "qrcode.react": "^3.1.0",
